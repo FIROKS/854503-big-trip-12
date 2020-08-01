@@ -8,12 +8,9 @@ import {createPriceTemplate} from './view/price.js';
 import {createSortingTemplate} from './view/sorting.js';
 import {createTripTemplate} from './view/trip.js';
 import {createTripInfoTemplate} from './view/tripInfo.js';
+import {renderElement} from './utils/renderElement.js';
 
 const EVENTS_AMOUNT = 3;
-
-const renderElement = (container, element, place) => {
-  container.insertAdjacentHTML(place, element);
-};
 
 const infoContainerELement = document.querySelector(`.trip-main`);
 const controlsContainerElement = document.querySelector(`.trip-controls`);
