@@ -22,7 +22,7 @@ const generateEvents = () => {
 
   return events;
 };
-debugger
+
 const events = generateEvents();
 
 const infoContainerELement = document.querySelector(`.trip-main`);
