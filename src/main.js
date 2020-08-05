@@ -9,8 +9,21 @@ import {createSortingTemplate} from './view/sorting.js';
 import {createTripTemplate} from './view/trip.js';
 import {createTripInfoTemplate} from './view/tripInfo.js';
 import {renderElement} from './utils/renderElement.js';
+import {generateEvent} from './view/event.js';
 
-const EVENTS_AMOUNT = 3;
+const EVENTS_AMOUNT = 20;
+
+const generateEvents = () => {
+  let events = [];
+
+  for (let i = 0; i < EVENTS_AMOUNT; i++) {
+    events.push(generateEvent());
+  }
+
+  return events;
+};
+debugger
+const events = generateEvents();
 
 const infoContainerELement = document.querySelector(`.trip-main`);
 const controlsContainerElement = document.querySelector(`.trip-controls`);
@@ -26,7 +39,7 @@ renderElement(tripInfoContainerELement, createPriceTemplate(), `beforeend`);
 renderElement(controlsContainerElement, createMenuTemplate(), `afterbegin`);
 renderElement(controlsContainerElement, cteateFilterTemplate(), `beforeend`);
 
-renderElement(eventsContainerElement, createEventEditingTemplate(), `afterbegin`);
+renderElement(eventsContainerElement, createEventEditingTemplate(events[0]), `afterbegin`);
 renderElement(eventsContainerElement, createSortingTemplate(), `afterbegin`);
 renderElement(eventsContainerElement, createDaysListTemplate(), `beforeend`);
 
@@ -36,6 +49,7 @@ renderElement(daysListElement, createDayTemplate(), `beforeend`);
 
 const dayEventsListElement = document.querySelector(`.trip-events__list`);
 
+
 for (let i = 0; i < EVENTS_AMOUNT; i++) {
-  renderElement(dayEventsListElement, createEventTemplate(), `beforeend`);
+  renderElement(dayEventsListElement, createEventTemplate(events[i]), `beforeend`);
 }
