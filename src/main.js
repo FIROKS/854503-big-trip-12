@@ -9,13 +9,12 @@ import {createSortingTemplate} from './view/sorting.js';
 import {createTripTemplate} from './view/trip.js';
 import {createTripInfoTemplate} from './view/tripInfo.js';
 import {renderElement} from './utils/renderElement.js';
-import {generateEvent} from './view/event.js';
+import {generateEvent} from './utils/mock.js';
 
 const EVENTS_AMOUNT = 20;
 
 const generateEvents = () => {
   let events = [];
-
   for (let i = 0; i < EVENTS_AMOUNT; i++) {
     events.push(generateEvent());
   }
@@ -33,7 +32,7 @@ renderElement(infoContainerELement, createTripInfoTemplate(), `afterbegin`);
 
 const tripInfoContainerELement = document.querySelector(`.trip-main__trip-info`);
 
-renderElement(tripInfoContainerELement, createTripTemplate(), `afterbegin`);
+renderElement(tripInfoContainerELement, createTripTemplate(events), `afterbegin`);
 renderElement(tripInfoContainerELement, createPriceTemplate(), `beforeend`);
 
 renderElement(controlsContainerElement, createMenuTemplate(), `afterbegin`);
