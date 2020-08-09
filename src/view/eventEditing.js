@@ -87,12 +87,12 @@ export const createEventEditingTemplate = (eventInfo) => {
           <label class="visually-hidden" for="event-start-time-1">
             From
           </label>
-          <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="18/03/19 00:00">
+          <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="${eventInfo.timeInfo.startDatetime.day}/${eventInfo.timeInfo.startDatetime.month}/${eventInfo.timeInfo.startDatetime.year.toString().substring(0, 2)} ${eventInfo.timeInfo.startDatetime.hour}:${eventInfo.timeInfo.startDatetime.minute}">
           —
           <label class="visually-hidden" for="event-end-time-1">
             To
           </label>
-          <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="18/03/19 00:00">
+          <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="${eventInfo.timeInfo.endDatetime.day}/${eventInfo.timeInfo.endDatetime.month}/${eventInfo.timeInfo.endDatetime.year.toString().substring(0, 2)} ${eventInfo.timeInfo.endDatetime.hour}:${eventInfo.timeInfo.endDatetime.minute}">
         </div>
 
         <div class="event__field-group  event__field-group--price">

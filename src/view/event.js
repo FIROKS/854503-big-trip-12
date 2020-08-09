@@ -1,5 +1,6 @@
 
-export const createEventTemplate = (eventInfo) => {
+
+export const createEventTemplate = (eventInfo, optionalList) => {
   return (
     `<div class="event">
       <div class="event__type">
@@ -9,24 +10,20 @@ export const createEventTemplate = (eventInfo) => {
 
       <div class="event__schedule">
         <p class="event__time">
-          <time class="event__start-time" datetime="2019-03-18T10:30">10:30</time>
+          <time class="event__start-time" datetime="${eventInfo.timeInfo.startDatetime.year}-${eventInfo.timeInfo.startDatetime.month}-${eventInfo.timeInfo.startDatetime.day}T${eventInfo.timeInfo.startDatetime.hour}:${eventInfo.timeInfo.startDatetime.minute}">${eventInfo.timeInfo.start}</time>
           —
-          <time class="event__end-time" datetime="2019-03-18T11:00">11:00</time>
+          <time class="event__end-time" datetime="${eventInfo.timeInfo.endDatetime.year}-${eventInfo.timeInfo.endDatetime.month}-${eventInfo.timeInfo.endDatetime.day}T${eventInfo.timeInfo.endDatetime.hour}:${eventInfo.timeInfo.endDatetime.minute}">${eventInfo.timeInfo.end}</time>
         </p>
-        <p class="event__duration">30M</p>
+        <p class="event__duration">${eventInfo.timeInfo.duration}</p>
       </div>
 
       <p class="event__price">
-        €&nbsp;<span class="event__price-value">20</span>
+        €&nbsp;<span class="event__price-value">${eventInfo.price}</span>
       </p>
 
       <h4 class="visually-hidden">Offers:</h4>
       <ul class="event__selected-offers">
-        <li class="event__offer">
-          <span class="event__offer-title">Order Uber</span>
-          +
-          €&nbsp;<span class="event__offer-price">20</span>
-        </li>
+        ${optionalList}
       </ul>
 
       <button class="event__rollup-btn" type="button">

@@ -1,4 +1,5 @@
 import * as random from './random.js';
+// import * as dayjs from 'dayjs';
 
 export const generateEvent = () => {
   return {
@@ -9,10 +10,7 @@ export const generateEvent = () => {
       description: random.generateRandomText(),
       photos: random.generateRandomPhotos(),
     },
-    // timeInfo: {
-    //   timeStart,
-    //   timeEnd,
-    //   duration,
-    // }
+    timeInfo: random.generateTimeInfo(),
+    price: random.generateEventInitialPrice(),
   };
 };
