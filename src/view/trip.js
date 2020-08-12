@@ -1,6 +1,4 @@
-
-
-export const createTripTemplate = (eventsList) => {
+const getTripList = (eventsList) => {
   let trip = ``;
   let lastPos;
 
@@ -13,6 +11,12 @@ export const createTripTemplate = (eventsList) => {
     lastPos = trip.lastIndexOf(` — `);
     trip = trip.substring(0, lastPos);
   }
+
+  return trip;
+};
+
+export const createTripTemplate = (eventsList) => {
+  const trip = getTripList(eventsList);
 
   return (
     `<div class="trip-info__main">

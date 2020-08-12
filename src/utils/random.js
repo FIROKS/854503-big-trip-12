@@ -1,8 +1,6 @@
-import {getRandomInteger} from './get-random-integer';
 import * as dayjs from 'dayjs';
 
 const SAMPLE_TEXT = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.`;
-
 
 const MINIMAL_AMOUNT = 1;
 const RANDOM_NUMBER = 5;
@@ -45,6 +43,14 @@ const OPTIONAL = new Map([
   [`travelByTrain`, 40],
 ]);
 
+const getRandomInteger = (from = 0, to = 1) => {
+  const lower = Math.ceil(Math.min(from, to));
+  const upper = Math.floor(Math.max(from, to));
+
+  return Math.floor(lower + Math.random() * (upper - lower + 1));
+};
+
+
 const getRandomFrom = (entity) => entity[getRandomInteger(0, entity.length - 1)];
 
 const addRandomTimeDimension = (dimension, maxValue) => {
@@ -58,9 +64,11 @@ const generateRandomDate = () => {
 
   if (selector === 0) {
     date = addRandomTimeDimension(`hour`, MAX_HOUR);
-  } else if (selector === 1) {
+  }
+  if (selector === 1) {
     date = addRandomTimeDimension(`minute`, MAX_MINUTE);
-  } else if (selector === 2) {
+  }
+  if (selector === 2) {
     date = addRandomTimeDimension(`day`, MAX_DAY);
   }
 
@@ -105,6 +113,7 @@ export const generateTimeInfo = () => {
       day: formatingDate(start.get(`day`)),
       hour: formatingDate(start.get(`hour`)),
       minute: formatingDate(start.get(`minute`)),
+      dayjs: start,
     },
     end: `${end.hour()}:${end.minute()}`,
     endDatetime: {
@@ -113,6 +122,7 @@ export const generateTimeInfo = () => {
       day: formatingDate(end.get(`day`)),
       hour: formatingDate(end.get(`hour`)),
       minute: formatingDate(end.get(`minute`)),
+      dayjs: end,
     },
     duration,
   };
@@ -168,7 +178,7 @@ export const generateRandomOptional = () => {
     options.push(of[i][0]);
   }
 
-  return (options = new Set(options));
+  return new Set(options);
 };
 
 export const generateEventInitialPrice = () => getRandomInteger(MIN_EVENT_PRICE, MAX_EVENT_PRICE);
