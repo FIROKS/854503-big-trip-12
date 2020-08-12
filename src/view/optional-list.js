@@ -1,6 +1,6 @@
+const MAX_SERVICES_NUMBER = 3;
 
-
-const OPTIONAL = new Map([
+const SERVICE_PRICES = new Map([
   [`addLuggage`, 30],
   [`comfortClass`, 100],
   [`addMeal`, 15],
@@ -8,24 +8,19 @@ const OPTIONAL = new Map([
   [`travelByTrain`, 40],
 ]);
 
-const createOptionalTemplate = (optional) => {
-  return `<li class="event__offer">
-  <span class="event__offer-title">${optional[0]}</span>
-  +
-  €&nbsp;<span class="event__offer-price">${optional[1]}</span>
-  </li>`;
+const createOptionalTemplate = (title, price) => {
+  return (
+    `<li class="event__offer">
+      <span class="event__offer-title">${title}</span>
+      +
+      €&nbsp;<span class="event__offer-price">${price}</span>
+    </li>`
+  );
 };
 
-export const createOptionalList = (optional) => {
-
-  let listTemplate = ``;
-  let counter = 0;
-  for (let option of OPTIONAL) {
-    if (optional.has(option[0]) && counter < 3) {
-      listTemplate = `${listTemplate}${createOptionalTemplate(option)}`;
-      counter++;
-    }
-  }
-
-  return listTemplate;
+export const createOptionalListTemplate = (services) => {
+  return Array.from(services)
+    .slice(0, MAX_SERVICES_NUMBER)
+    .map((service) => createOptionalTemplate(service, SERVICE_PRICES.get(service)))
+    .join(``);
 };

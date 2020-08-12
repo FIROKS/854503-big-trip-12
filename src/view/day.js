@@ -1,7 +1,5 @@
-import {createDaysListTemplate} from './daysList.js';
 import {createEventTemplate} from './event.js';
-import {createOptionalList} from './optional-list.js';
-import {renderElement} from '../utils/renderElement.js';
+import {createOptionalListTemplate} from './optional-list.js';
 
 const NUMBER_TO_MONTH = {
   0: `JAN`,
@@ -18,24 +16,12 @@ const NUMBER_TO_MONTH = {
   11: `DEC`,
 };
 
-const filterEvents = (events) => {
-
-  return events.sort((a, b) => {
-    if (a.timeInfo.startDatetime.dayjs.isBefore(b.timeInfo.startDatetime.dayjs)) {
-      return -1;
-    }
-
-    if (a.timeInfo.startDatetime.dayjs.isAfter(b.timeInfo.startDatetime.dayjs)) {
-      return 1;
-    }
-  });
-};
 
 const getOneDayEvent = (filteredEvents) => {
-  let events = [];
-  events[0] = [];
+  let events = [[]];
   let date = filteredEvents[0].timeInfo.startDatetime.dayjs;
   let i = 0;
+
   for (let event of filteredEvents) {
     if (event.timeInfo.startDatetime.dayjs.isAfter(date, `day`)) {
       date = event.timeInfo.startDatetime.dayjs;
@@ -45,6 +31,7 @@ const getOneDayEvent = (filteredEvents) => {
       events[i].push(event);
     }
   }
+
   return events;
 };
 
@@ -62,34 +49,29 @@ const createDayTemplate = (dayNumber, month, day, eventTemplate) => {
   );
 };
 
-const eventsContainerElement = document.querySelector(`.trip-events`);
-
-renderElement(eventsContainerElement, createDaysListTemplate(), `beforeend`);
-const daysListElement = document.querySelector(`.trip-days`);
-
-const createDaysTemplate = (filteredEvents) => {
+export const createDaysTemplate = (filteredEvents) => {
   const days = getOneDayEvent(filteredEvents);
+  let result = ``;
 
-  let dayTemplate;
   let oneDayEventsTemplate;
   let month;
   let day;
+
   for (let i = 0; i < days.length; i++) {
     oneDayEventsTemplate = ``;
     for (let j = 0; j < days[i].length; j++) {
-      oneDayEventsTemplate = `${oneDayEventsTemplate}${createEventTemplate(days[i][j], createOptionalList(days[i][j].optional))}`;
+      let optionalList = createOptionalListTemplate(days[i][j].optional);
+      let eventTemplate = createEventTemplate(days[i][j], optionalList);
+
+      oneDayEventsTemplate = `${oneDayEventsTemplate}${eventTemplate}`;
     }
-    month = NUMBER_TO_MONTH[days[i][0].timeInfo.startDatetime.dayjs.month()];
-    day = days[i][0].timeInfo.startDatetime.dayjs.date();
+    let dayjs = days[i][0].timeInfo.startDatetime.dayjs;
 
-    dayTemplate = createDayTemplate(i + 1, month, day, oneDayEventsTemplate);
+    month = NUMBER_TO_MONTH[dayjs.month()];
+    day = days[dayjs.date()];
 
-    renderElement(daysListElement, dayTemplate, `beforeend`);
+    result += createDayTemplate(i + 1, month, day, oneDayEventsTemplate);
   }
-};
 
-export const generateDay = (events) => {
-  const filteredEvents = filterEvents(events);
-
-  createDaysTemplate(filteredEvents);
+  return result;
 };

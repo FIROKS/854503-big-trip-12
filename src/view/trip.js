@@ -8,6 +8,7 @@ const getTripList = (eventsList) => {
     for (let l of eventsList) {
       trip = `${trip}${l.destination} — `;
     }
+
     lastPos = trip.lastIndexOf(` — `);
     trip = trip.substring(0, lastPos);
   }

@@ -50,37 +50,33 @@ const getRandomInteger = (from = 0, to = 1) => {
   return Math.floor(lower + Math.random() * (upper - lower + 1));
 };
 
-
 const getRandomFrom = (entity) => entity[getRandomInteger(0, entity.length - 1)];
 
 const addRandomTimeDimension = (dimension, maxValue) => {
   const date = dayjs().add(getRandomInteger(0, maxValue), `${dimension}`);
+
   return date.toString().length < 2 ? `0${date}` : date;
 };
 
 const generateRandomDate = () => {
-  const selector = getRandomInteger(0, 2);
-  let date;
+  const randomPeriod = getRandomInteger(0, 2);
 
-  if (selector === 0) {
-    date = addRandomTimeDimension(`hour`, MAX_HOUR);
+  if (randomPeriod === 0) {
+    return addRandomTimeDimension(`hour`, MAX_HOUR);
   }
-  if (selector === 1) {
-    date = addRandomTimeDimension(`minute`, MAX_MINUTE);
-  }
-  if (selector === 2) {
-    date = addRandomTimeDimension(`day`, MAX_DAY);
+  if (randomPeriod === 1) {
+    return addRandomTimeDimension(`minute`, MAX_MINUTE);
   }
 
-  return date;
+  return addRandomTimeDimension(`day`, MAX_DAY);
 };
-
 
 const getDuration = (timeStart, timeEnd) => {
   const hourStart = timeStart.hour();
   const minuteStart = timeStart.minute();
   const hourEnd = timeEnd.hour();
   const minuteEnd = timeEnd.minute();
+
   let duration = ``;
 
   if ((hourEnd - hourStart) > 0) {
@@ -130,6 +126,7 @@ export const generateTimeInfo = () => {
 
 export const generateRandomText = () => {
   const text = SAMPLE_TEXT.split(`. `);
+
   let string = ``;
   let amount = getRandomInteger(MINIMAL_AMOUNT, RANDOM_NUMBER);
 
@@ -142,13 +139,7 @@ export const generateRandomText = () => {
 
 export const generateRandomType = () => {
   const eventType = getRandomFrom(EVENT_TYPE);
-  let preposition;
-
-  if (EVENT_TYPE_ARRIVAL.has(eventType)) {
-    preposition = `at`;
-  } else {
-    preposition = `to`;
-  }
+  let preposition = (EVENT_TYPE_ARRIVAL.has(eventType)) ? `at` : `to`;
 
   return {
     eventType,

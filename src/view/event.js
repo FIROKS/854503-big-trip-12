@@ -1,6 +1,4 @@
-
-
-export const createEventTemplate = (eventInfo, optionalList) => {
+export const createEventTemplate = (eventInfo, optionalListTemplate) => {
   return (
     `<div class="event">
       <div class="event__type">
@@ -23,7 +21,7 @@ export const createEventTemplate = (eventInfo, optionalList) => {
 
       <h4 class="visually-hidden">Offers:</h4>
       <ul class="event__selected-offers">
-        ${optionalList}
+        ${optionalListTemplate}
       </ul>
 
       <button class="event__rollup-btn" type="button">

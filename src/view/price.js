@@ -1,11 +1,6 @@
 const getPrice = (events) => {
-  let price = 0;
-
-  for (let event of events) {
-    price += event.price;
-  }
-
-  return price;
+  const initialValue = 0;
+  return events.reduce((total, current) => total + current.price, initialValue);
 };
 
 export const createPriceTemplate = (events) => {

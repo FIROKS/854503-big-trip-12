@@ -1,14 +1,15 @@
-import {generateDay} from './view/day.js';
-import {createDaysListTemplate} from './view/daysList.js';
-import {createEventEditingTemplate} from './view/eventEditing.js';
-import {cteateFilterTemplate} from './view/filter.js';
-import {createMenuTemplate} from './view/menu.js';
-import {createPriceTemplate} from './view/price.js';
-import {createSortingTemplate} from './view/sorting.js';
-import {createTripTemplate} from './view/trip.js';
-import {createTripInfoTemplate} from './view/tripInfo.js';
-import {renderElement} from './utils/renderElement.js';
-import {generateEvents} from './utils/mock.js';
+import {createDaysTemplate} from './view/day';
+import {createDaysListTemplate} from './view/daysList';
+import {createEventEditingTemplate} from './view/eventEditing';
+import {cteateFilterTemplate} from './view/filter';
+import {createMenuTemplate} from './view/menu';
+import {createPriceTemplate} from './view/price';
+import {createSortingTemplate} from './view/sorting';
+import {createTripTemplate} from './view/trip';
+import {createTripInfoTemplate} from './view/tripInfo';
+import {renderElement} from './utils/renderElement';
+import {generateEvents} from './utils/mock';
+import {sortEvents} from './utils/sort-events';
 
 const events = generateEvents();
 
@@ -30,4 +31,6 @@ renderElement(eventsContainerElement, createEventEditingTemplate(events[0]), `af
 renderElement(eventsContainerElement, createSortingTemplate(), `afterbegin`);
 renderElement(eventsContainerElement, createDaysListTemplate(), `beforeend`);
 
-generateDay(events);
+const daysListElement = document.querySelector(`.trip-days`);
+
+renderElement(daysListElement, createDaysTemplate(sortEvents(events)), `beforeend`);

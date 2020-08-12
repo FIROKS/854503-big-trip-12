@@ -1,5 +1,4 @@
 import * as random from './random.js';
-// import * as dayjs from 'dayjs';
 
 const EVENTS_AMOUNT = 20;
 
