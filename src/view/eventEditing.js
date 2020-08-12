@@ -1,11 +1,107 @@
-export const createEventEditingTemplate = () => {
+const TRANSFER_LIST = [
+  {
+    title: `Taxi`,
+    value: `taxi`
+  },
+  {
+    title: `Bus`,
+    value: `bus`,
+  },
+  {
+    title: `Train`,
+    value: `train`,
+  },
+  {
+    title: `Ship`,
+    value: `ship`,
+  },
+  {
+    title: `Transport`,
+    value: `transport`,
+  },
+  {
+    title: `Drive`,
+    value: `drive`,
+  },
+  {
+    title: `Flight`,
+    value: `flight`,
+  },
+];
+
+const ACTIVITY_LIST = [
+  {
+    title: `Check-in`,
+    value: `check-in`
+  },
+  {
+    title: `Sightseeing`,
+    value: `sightseeing`
+  },
+  {
+    title: `Restaurant`,
+    value: `restaurant`
+  },
+];
+
+const OFFERS_LIST = [
+  {
+    id: `luggage`,
+    title: `Add luggage`,
+    price: `30`
+  },
+  {
+    id: `comfort`,
+    title: `Switch to comfort class`,
+    price: `100`
+  },
+  {
+    id: `meal`,
+    title: `Add meal`,
+    price: `15`
+  },
+  {
+    id: `meal`,
+    title: `Add meal`,
+    price: `15`
+  },
+  {
+    id: `train`,
+    title: `Travel by train`,
+    price: `40`
+  },
+];
+
+const createOfferTemplate = (offerInfo) => {
+  return (
+    `<div class="event__offer-selector">
+      <input class="event__offer-checkbox  visually-hidden" id="event-offer-${offerInfo.id}-1" type="checkbox" name="event-offer-${offerInfo.id}">
+      <label class="event__offer-label" for="event-offer-${offerInfo.id}-1">
+        <span class="event__offer-title">${offerInfo.title}</span>
+        +
+        €&nbsp;<span class="event__offer-price">${offerInfo.price}</span>
+      </label>
+    </div>`
+  );
+};
+
+const createEventTypeTemplate = (typeInfo) => {
+  return (
+    `<div class="event__type-item">
+      <input id="event-type-${typeInfo.value}-1" class="event__type-input visually-hidden" type="radio" name="event-type" value="${typeInfo.value}">
+      <label class="event__type-label  event__type-label--${typeInfo.value}" for="event-type-${typeInfo.value}-1">${typeInfo.title}</label>
+    </div>`
+  );
+};
+
+export const createEventEditingTemplate = (eventInfo) => {
   return (
     `<form class="trip-events__item  event  event--edit" action="#" method="post">
       <header class="event__header">
         <div class="event__type-wrapper">
-          <label class="event__type  event__type-btn" for="event-type-toggle-1">
+          <label class="event__type event__type-btn" for="event-type-toggle-1">
             <span class="visually-hidden">Choose event type</span>
-            <img class="event__type-icon" width="17" height="17" src="img/icons/flight.png" alt="Event type icon">
+            <img class="event__type-icon" width="17" height="17" src="img/icons/${eventInfo.typeInfo.eventType}.png" alt="Event type icon">
           </label>
           <input class="event__type-toggle  visually-hidden" id="event-type-toggle-1" type="checkbox">
 
@@ -13,68 +109,28 @@ export const createEventEditingTemplate = () => {
             <fieldset class="event__type-group">
               <legend class="visually-hidden">Transfer</legend>
 
-              <div class="event__type-item">
-                <input id="event-type-taxi-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="taxi">
-                <label class="event__type-label  event__type-label--taxi" for="event-type-taxi-1">Taxi</label>
-              </div>
+              ${TRANSFER_LIST
+                .map((typeInfo) => createEventTypeTemplate(typeInfo))
+                .join(``)}
 
-              <div class="event__type-item">
-                <input id="event-type-bus-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="bus">
-                <label class="event__type-label  event__type-label--bus" for="event-type-bus-1">Bus</label>
-              </div>
-
-              <div class="event__type-item">
-                <input id="event-type-train-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="train">
-                <label class="event__type-label  event__type-label--train" for="event-type-train-1">Train</label>
-              </div>
-
-              <div class="event__type-item">
-                <input id="event-type-ship-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="ship">
-                <label class="event__type-label  event__type-label--ship" for="event-type-ship-1">Ship</label>
-              </div>
-
-              <div class="event__type-item">
-                <input id="event-type-transport-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="transport">
-                <label class="event__type-label  event__type-label--transport" for="event-type-transport-1">Transport</label>
-              </div>
-
-              <div class="event__type-item">
-                <input id="event-type-drive-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="drive">
-                <label class="event__type-label  event__type-label--drive" for="event-type-drive-1">Drive</label>
-              </div>
-
-              <div class="event__type-item">
-                <input id="event-type-flight-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="flight" checked="">
-                <label class="event__type-label  event__type-label--flight" for="event-type-flight-1">Flight</label>
-              </div>
             </fieldset>
 
             <fieldset class="event__type-group">
               <legend class="visually-hidden">Activity</legend>
 
-              <div class="event__type-item">
-                <input id="event-type-check-in-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="check-in">
-                <label class="event__type-label  event__type-label--check-in" for="event-type-check-in-1">Check-in</label>
-              </div>
+              ${ACTIVITY_LIST
+                .map((typeInfo) => createEventTypeTemplate(typeInfo))
+                .join(``)}
 
-              <div class="event__type-item">
-                <input id="event-type-sightseeing-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="sightseeing">
-                <label class="event__type-label  event__type-label--sightseeing" for="event-type-sightseeing-1">Sightseeing</label>
-              </div>
-
-              <div class="event__type-item">
-                <input id="event-type-restaurant-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="restaurant">
-                <label class="event__type-label  event__type-label--restaurant" for="event-type-restaurant-1">Restaurant</label>
-              </div>
             </fieldset>
           </div>
         </div>
 
         <div class="event__field-group  event__field-group--destination">
           <label class="event__label  event__type-output" for="event-destination-1">
-            Flight to
+          ${eventInfo.typeInfo.eventType} ${eventInfo.typeInfo.preposition}
           </label>
-          <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="Geneva" list="destination-list-1">
+          <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${eventInfo.destination}" list="destination-list-1">
           <datalist id="destination-list-1">
             <option value="Amsterdam"></option>
             <option value="Geneva"></option>
@@ -87,18 +143,18 @@ export const createEventEditingTemplate = () => {
           <label class="visually-hidden" for="event-start-time-1">
             From
           </label>
-          <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="18/03/19 00:00">
+          <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="${eventInfo.timeInfo.startDatetime.day}/${eventInfo.timeInfo.startDatetime.month}/${eventInfo.timeInfo.startDatetime.year.toString().substring(0, 2)} ${eventInfo.timeInfo.startDatetime.hour}:${eventInfo.timeInfo.startDatetime.minute}">
           —
           <label class="visually-hidden" for="event-end-time-1">
             To
           </label>
-          <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="18/03/19 00:00">
+          <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="${eventInfo.timeInfo.endDatetime.day}/${eventInfo.timeInfo.endDatetime.month}/${eventInfo.timeInfo.endDatetime.year.toString().substring(0, 2)} ${eventInfo.timeInfo.endDatetime.hour}:${eventInfo.timeInfo.endDatetime.minute}">
         </div>
 
         <div class="event__field-group  event__field-group--price">
           <label class="event__label" for="event-price-1">
             <span class="visually-hidden">Price</span>
-            €
+            € ${eventInfo.price}
           </label>
           <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price" value="">
         </div>
@@ -111,64 +167,21 @@ export const createEventEditingTemplate = () => {
           <h3 class="event__section-title  event__section-title--offers">Offers</h3>
 
           <div class="event__available-offers">
-            <div class="event__offer-selector">
-              <input class="event__offer-checkbox  visually-hidden" id="event-offer-luggage-1" type="checkbox" name="event-offer-luggage" checked="">
-              <label class="event__offer-label" for="event-offer-luggage-1">
-                <span class="event__offer-title">Add luggage</span>
-                +
-                €&nbsp;<span class="event__offer-price">30</span>
-              </label>
-            </div>
 
-            <div class="event__offer-selector">
-              <input class="event__offer-checkbox  visually-hidden" id="event-offer-comfort-1" type="checkbox" name="event-offer-comfort" checked="">
-              <label class="event__offer-label" for="event-offer-comfort-1">
-                <span class="event__offer-title">Switch to comfort class</span>
-                +
-                €&nbsp;<span class="event__offer-price">100</span>
-              </label>
-            </div>
+          ${OFFERS_LIST
+            .map((offer) => createOfferTemplate(offer))
+            .join(``)}
 
-            <div class="event__offer-selector">
-              <input class="event__offer-checkbox  visually-hidden" id="event-offer-meal-1" type="checkbox" name="event-offer-meal">
-              <label class="event__offer-label" for="event-offer-meal-1">
-                <span class="event__offer-title">Add meal</span>
-                +
-                €&nbsp;<span class="event__offer-price">15</span>
-              </label>
-            </div>
-
-            <div class="event__offer-selector">
-              <input class="event__offer-checkbox  visually-hidden" id="event-offer-seats-1" type="checkbox" name="event-offer-seats">
-              <label class="event__offer-label" for="event-offer-seats-1">
-                <span class="event__offer-title">Choose seats</span>
-                +
-                €&nbsp;<span class="event__offer-price">5</span>
-              </label>
-            </div>
-
-            <div class="event__offer-selector">
-              <input class="event__offer-checkbox  visually-hidden" id="event-offer-train-1" type="checkbox" name="event-offer-train">
-              <label class="event__offer-label" for="event-offer-train-1">
-                <span class="event__offer-title">Travel by train</span>
-                +
-                €&nbsp;<span class="event__offer-price">40</span>
-              </label>
-            </div>
           </div>
         </section>
 
         <section class="event__section  event__section--destination">
           <h3 class="event__section-title  event__section-title--destination">Destination</h3>
-          <p class="event__destination-description">Geneva is a city in Switzerland that lies at the southern tip of expansive Lac Léman (Lake Geneva). Surrounded by the Alps and Jura mountains, the city has views of dramatic Mont Blanc.</p>
+          <p class="event__destination-description">${eventInfo.destinationInfo.description}</p>
 
           <div class="event__photos-container">
             <div class="event__photos-tape">
-              <img class="event__photo" src="img/photos/1.jpg" alt="Event photo">
-              <img class="event__photo" src="img/photos/2.jpg" alt="Event photo">
-              <img class="event__photo" src="img/photos/3.jpg" alt="Event photo">
-              <img class="event__photo" src="img/photos/4.jpg" alt="Event photo">
-              <img class="event__photo" src="img/photos/5.jpg" alt="Event photo">
+              ${eventInfo.destinationInfo.photos}
             </div>
           </div>
         </section>
