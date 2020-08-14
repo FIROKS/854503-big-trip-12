@@ -73,17 +73,18 @@ const OFFERS_LIST = [
     price: `40`
   },
 ];
+
 // TODO: реализовать учет offers
 export default class EventEditing {
   constructor(event, offers) {
     this._element = null;
     this._event = event;
     this._offers = offers;
-  };
+  }
 
   getTemplate() {
     return this._createEventEditingTemplate(this._event);
-  };
+  }
 
   getElement() {
     if (!this._element) {
@@ -91,7 +92,7 @@ export default class EventEditing {
     }
 
     return this._element;
-  };
+  }
 
   removeElement() {
     this._element = null;
@@ -203,7 +204,7 @@ export default class EventEditing {
         </section>
       </form>`
     );
-  };
+  }
 
   _createOfferTemplate(offerInfo) {
     return (
@@ -216,7 +217,7 @@ export default class EventEditing {
         </label>
       </div>`
     );
-  };
+  }
 
   _createEventTypeTemplate(typeInfo) {
     return (
@@ -225,5 +226,5 @@ export default class EventEditing {
         <label class="event__type-label  event__type-label--${typeInfo.value}" for="event-type-${typeInfo.value}-1">${typeInfo.title}</label>
       </div>`
     );
-  };
-};
+  }
+}

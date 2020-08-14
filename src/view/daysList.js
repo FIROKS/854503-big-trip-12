@@ -1,13 +1,13 @@
 import {createElement} from '../utils/create-element';
 
 export default class DaysList {
-  constructor () {
+  constructor() {
     this._element = null;
-  };
+  }
 
   getTemplate() {
     return this._createDaysListTemplate();
-  };
+  }
 
   getElement() {
     if (!this._element) {
@@ -15,17 +15,16 @@ export default class DaysList {
     }
 
     return this._element;
-  };
+  }
 
   removeElement() {
     this._element = null;
   }
 
-  
   _createDaysListTemplate() {
     return (
       `<ul class="trip-days">
       </ul>`
     );
-  };
-};
+  }
+}

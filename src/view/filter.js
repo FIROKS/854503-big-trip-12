@@ -1,4 +1,4 @@
-import { createElement } from "../utils/create-element";
+import {createElement} from "../utils/create-element";
 
 const FILTER_LIST = [
   {
@@ -18,11 +18,11 @@ const FILTER_LIST = [
 export default class Filter {
   constructor() {
     this._element = null;
-  };
+  }
 
   getTemplate() {
     return this._cteateFilterTemplate();
-  };
+  }
 
   getElement() {
     if (!this._element) {
@@ -43,7 +43,7 @@ export default class Filter {
         <label class="trip-filters__filter-label" for="filter-${filterInfo.title}">${filterInfo.title}</label>
       </div>`
     );
-  };
+  }
 
   _cteateFilterTemplate() {
     return (
@@ -56,5 +56,5 @@ export default class Filter {
         <button class="visually-hidden" type="submit">Accept filter</button>
       </form>`
     );
-  };
-};
+  }
+}

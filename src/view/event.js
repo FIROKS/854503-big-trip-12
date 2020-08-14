@@ -5,11 +5,11 @@ export default class Event {
     this._eventInfo = eventInfo;
     this._offerListTemplate = offerListTemplate;
     this._element = null;
-  };
+  }
 
   getTemplate() {
     return this._createEventTemplate(this._eventInfo, this._offerListTemplate);
-  };
+  }
 
   getElement() {
     if (!this._element) {
@@ -17,7 +17,7 @@ export default class Event {
     }
 
     return this._element;
-  };
+  }
 
   removeElement() {
     this._element = null;
@@ -54,5 +54,5 @@ export default class Event {
         </button>
       </div>`
     );
-  };
-};
+  }
+}

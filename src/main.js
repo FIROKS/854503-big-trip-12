@@ -1,6 +1,6 @@
 import Days from './view/day';
 import DaysList from './view/daysList';
-import EventEditing from './view/eventEditing';
+// import EventEditing from './view/eventEditing';
 import Filter from './view/filter';
 import Menu from './view/menu'; // Нужно ли добавлять View к классам отображения?
 import Price from './view/price';
@@ -39,20 +39,20 @@ const renderEventsByDay = () => {
 
   const filteredEvents = sortEvents(events);
 
-  const replaceEventToEditing = (parentNode, eventEditingElement, eventElement) => {
-    parentNode.replaceChild(eventEditingElement, eventElement);
-  };
+  // const replaceEventToEditing = (parentNode, eventEditingElement, eventElement) => {
+  //   parentNode.replaceChild(eventEditingElement, eventElement);
+  // };
 
-  const replaceEditingToEvent = (parentNode, eventEditingElement, eventElement) => {
-    parentNode.replaceChild(eventElement, eventEditingElement);
-  };
+  // const replaceEditingToEvent = (parentNode, eventEditingElement, eventElement) => {
+  //   parentNode.replaceChild(eventElement, eventEditingElement);
+  // };
 
   for (let i = 0; i < filteredEvents.length; i++) {
     let event = filteredEvents[i];
     let dayElement = new Days(event[0].timeInfo, i + 1).getElement(); // Создать элемент дня с информацией из первого элемента подмассива
     let container = dayElement.querySelector(`.trip-events__list`);
     let eventElement;
-    let eventEditingElement;
+    // let eventEditingElement;
 
     renderElement(daysListElement, dayElement, `beforeend`);
 

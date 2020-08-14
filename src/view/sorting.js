@@ -1,13 +1,13 @@
-import { createElement } from "../utils/create-element";
+import {createElement} from "../utils/create-element";
 
 export default class Sorting {
   constructor() {
     this._element = null;
-  };
+  }
 
   getTemplate() {
     return this._createSortingTemplate();
-  };
+  }
 
   getElement() {
     if (!this._element) {
@@ -15,11 +15,11 @@ export default class Sorting {
     }
 
     return this._element;
-  };
+  }
 
   removeElement() {
     this._element = null;
-  };
+  }
 
   _createSortingTemplate() {
     return (
@@ -50,5 +50,5 @@ export default class Sorting {
         <span class="trip-sort__item  trip-sort__item--offers">Offers</span>
       </form>`
     );
-  };
-};
+  }
+}
