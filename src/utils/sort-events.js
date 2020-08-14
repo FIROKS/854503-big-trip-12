@@ -1,11 +1,18 @@
-export const sortEvents = (events) => events.sort((a, b) => {
-  if (a.timeInfo.startDatetime.dayjs.isBefore(b.timeInfo.startDatetime.dayjs)) {
-    return -1;
+// Возвращает массив событий, отфильтрованный по дням
+export const sortEvents = (events) => {
+  let sortedEvents = [[]];
+  let date = events[0].timeInfo.startDatetime.dayjs;
+  let i = 0;
+
+  for (let event of events) {
+    if (event.timeInfo.startDatetime.dayjs.isAfter(date, `day`)) {
+      date = event.timeInfo.startDatetime.dayjs;
+      i++;
+      sortedEvents.push([event]);
+    } else {
+      sortedEvents[i].push(event);
+    }
   }
 
-  if (a.timeInfo.startDatetime.dayjs.isAfter(b.timeInfo.startDatetime.dayjs)) {
-    return 1;
-  }
-
-  return 0;
-});
+  return sortedEvents;
+};

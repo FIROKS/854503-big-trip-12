@@ -35,13 +35,28 @@ const EVENT_TYPE_ARRIVAL = new Set([
   `restaurant`,
 ]);
 
-const OPTIONAL = new Map([
+const OFFERS = new Map([
   [`addLuggage`, 30],
   [`comfortClass`, 100],
   [`addMeal`, 15],
   [`chooseSeats`, 5],
   [`travelByTrain`, 40],
 ]);
+
+const NUMBER_TO_MONTH = {
+  0: `JAN`,
+  1: `FEB`,
+  2: `MAR`,
+  3: `APR`,
+  4: `MAY`,
+  5: `JUN`,
+  6: `JUL`,
+  7: `AUG`,
+  8: `SEP`,
+  9: `OCT`,
+  10: `NOV`,
+  11: `DEC`,
+};
 
 const getRandomInteger = (from = 0, to = 1) => {
   const lower = Math.ceil(Math.min(from, to));
@@ -96,35 +111,7 @@ const formatingDate = (date) => {
   return date.toString().length < 2 ? `0${date}` : date;
 };
 
-export const generateTimeInfo = () => {
-  const start = generateRandomDate();
-  const end = generateRandomDate();
-  const duration = getDuration(start, end);
-
-  return {
-    start: `${start.hour()}:${start.minute()}`,
-    startDatetime: {
-      year: formatingDate(start.get(`year`)),
-      month: formatingDate(start.get(`month`)),
-      day: formatingDate(start.get(`day`)),
-      hour: formatingDate(start.get(`hour`)),
-      minute: formatingDate(start.get(`minute`)),
-      dayjs: start,
-    },
-    end: `${end.hour()}:${end.minute()}`,
-    endDatetime: {
-      year: formatingDate(end.get(`year`)),
-      month: formatingDate(end.get(`month`)),
-      day: formatingDate(end.get(`day`)),
-      hour: formatingDate(end.get(`hour`)),
-      minute: formatingDate(end.get(`minute`)),
-      dayjs: end,
-    },
-    duration,
-  };
-};
-
-export const generateRandomText = () => {
+const generateRandomText = () => {
   const text = SAMPLE_TEXT.split(`. `);
 
   let string = ``;
@@ -135,6 +122,47 @@ export const generateRandomText = () => {
   }
 
   return string;
+};
+
+const generateRandomPhotos = () => {
+  const photos = [];
+  let amount = getRandomInteger(MINIMAL_AMOUNT, RANDOM_NUMBER);
+
+  for (let i = 0; i < amount; i++) {
+    photos.push(`<img class="event__photo" src="http://picsum.photos/248/152?r=${Math.random()}" alt="Event photo">`);
+  }
+
+  return photos;
+};
+
+export const generateTimeInfo = () => {
+  const start = generateRandomDate();
+  const end = generateRandomDate();
+  const duration = getDuration(start, end);
+
+  return {
+    start: `${start.hour()}:${start.minute()}`,
+    startDatetime: {
+      year: formatingDate(start.get(`year`)),
+      monthNumber: formatingDate(start.get(`month`)),
+      month: NUMBER_TO_MONTH[parseInt(formatingDate(start.get(`month`)), 10)],
+      day: formatingDate(start.get(`day`)),
+      hour: formatingDate(start.get(`hour`)),
+      minute: formatingDate(start.get(`minute`)),
+      dayjs: start,
+    },
+    end: `${end.hour()}:${end.minute()}`,
+    endDatetime: {
+      year: formatingDate(end.get(`year`)),
+      monthNumber: formatingDate(end.get(`month`)),
+      month: NUMBER_TO_MONTH[parseInt(formatingDate(start.get(`month`)), 10)],
+      day: formatingDate(end.get(`day`)),
+      hour: formatingDate(end.get(`hour`)),
+      minute: formatingDate(end.get(`minute`)),
+      dayjs: end,
+    },
+    duration,
+  };
 };
 
 export const generateRandomType = () => {
@@ -149,21 +177,17 @@ export const generateRandomType = () => {
 
 export const generateRandomDestination = () => getRandomFrom(DESTINATION);
 
-export const generateRandomPhotos = () => {
-  const photos = [];
-  let amount = getRandomInteger(MINIMAL_AMOUNT, RANDOM_NUMBER);
-
-  for (let i = 0; i < amount; i++) {
-    photos.push(`<img class="event__photo" src="http://picsum.photos/248/152?r=${Math.random()}" alt="Event photo">`);
-  }
-
-  return photos;
+export const generateRandomDestinationInfo = () => {
+  return {
+    description: generateRandomText(),
+    photos: generateRandomPhotos(),
+  };
 };
 
-export const generateRandomOptional = () => {
+export const generateRandomOffers = () => {
   let options = [];
   const amount = getRandomInteger(0, RANDOM_NUMBER);
-  const of = Array.from(OPTIONAL);
+  const of = Array.from(OFFERS);
 
   for (let i = 0; i < amount; i++) {
     options.push(of[i][0]);
