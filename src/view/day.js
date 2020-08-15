@@ -20,7 +20,6 @@ export default class Days {
   }
 
   _createDayTemplate(event, dayNumber) {
-
     return (
       `<li class="trip-days__item  day">
         <div class="day__info">

@@ -1,6 +1,6 @@
 import Days from './view/day';
 import DaysList from './view/daysList';
-// import EventEditing from './view/eventEditing';
+import EventEditing from './view/eventEditing';
 import Filter from './view/filter';
 import Menu from './view/menu'; // Нужно ли добавлять View к классам отображения?
 import Price from './view/price';
@@ -34,47 +34,44 @@ renderElement(eventsContainerElement, new Sorting().getElement());
 
 renderElement(eventsContainerElement, new DaysList().getElement(), `beforeend`);
 
-const renderEventsByDay = () => {
-  const daysListElement = document.querySelector(`.trip-days`);
+const daysListElement = document.querySelector(`.trip-days`);
 
-  const filteredEvents = sortEvents(events);
+// const renderEventsByDay = () => {
 
-  // const replaceEventToEditing = (parentNode, eventEditingElement, eventElement) => {
-  //   parentNode.replaceChild(eventEditingElement, eventElement);
-  // };
+const filteredEvents = sortEvents(events);
 
-  // const replaceEditingToEvent = (parentNode, eventEditingElement, eventElement) => {
-  //   parentNode.replaceChild(eventElement, eventEditingElement);
-  // };
+const renderEvent = (parentNode, eventInDay, offers) => {
+  const offer = new Offers(offers).getTemplate();
+  const event = new Event(eventInDay, offer);
+  const editEvent = new EventEditing(eventInDay, new Offers(offers));
 
-  for (let i = 0; i < filteredEvents.length; i++) {
-    let event = filteredEvents[i];
-    let dayElement = new Days(event[0].timeInfo, i + 1).getElement(); // Создать элемент дня с информацией из первого элемента подмассива
-    let container = dayElement.querySelector(`.trip-events__list`);
-    let eventElement;
-    // let eventEditingElement;
+  const replaceEventToEditing = () => {
+    parentNode.replaceChild(editEvent.getElement(), event.getElement());
+  };
 
-    renderElement(daysListElement, dayElement, `beforeend`);
+  const replaceEditingToEvent = () => {
+    parentNode.replaceChild(event.getElement(), editEvent.getElement());
+  };
 
-    for (let eventInDay of event) {
-      let offers = new Offers(eventInDay.offers).getTemplate();
+  event.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, () => {
+    replaceEventToEditing();
+  });
 
-      eventElement = new Event(eventInDay, offers).getElement();
-      renderElement(container, eventElement, `beforeend`);
+  editEvent.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, () => {
+    replaceEditingToEvent();
+  });
 
-      // eventEditingElement = new EventEditing(eventInDay, offers).getElement();
-      // renderElement(container, eventEditingElement, `beforeend`);
-
-
-      // eventElement.querySelector(`.event__rollup-btn`).addEventListener(`click`, () => {
-      //   replaceEventToEditing(container, eventElement, eventEditingElement);
-      // });
-
-      // eventEditingElement.querySelector(`.event__rollup-btn`).addEventListener(`click`, () => {
-      //   replaceEditingToEvent(container, eventElement, eventEditingElement);
-      // });
-    }
-  }
+  renderElement(parentNode, event.getElement(), `beforeend`);
 };
 
-renderEventsByDay();
+for (let i = 0; i < filteredEvents.length; i++) {
+  let event = filteredEvents[i];
+  let dayElement = new Days(event[0].timeInfo, i + 1).getElement(); // Создать элемент дня с информацией из первого элемента подмассива
+  let container = dayElement.querySelector(`.trip-events__list`);
+
+  renderElement(daysListElement, dayElement, `beforeend`);
+
+  for (let eventInDay of event) {
+    renderEvent(container, eventInDay, eventInDay.offers);
+  }
+}
