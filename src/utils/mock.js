@@ -6,11 +6,8 @@ const generateEvent = () => {
   return {
     typeInfo: random.generateRandomType(),
     destination: random.generateRandomDestination(),
-    optional: random.generateRandomOptional(),
-    destinationInfo: {
-      description: random.generateRandomText(),
-      photos: random.generateRandomPhotos(),
-    },
+    offers: random.generateRandomOffers(),
+    destinationInfo: random.generateRandomDestinationInfo(),
     timeInfo: random.generateTimeInfo(),
     price: random.generateEventInitialPrice(),
   };
