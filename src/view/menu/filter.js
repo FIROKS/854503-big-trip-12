@@ -1,4 +1,4 @@
-import {createElement} from "../utils/create-element";
+import {createElement} from "../../utils/create-element";
 
 const FILTER_LIST = [
   {
@@ -15,7 +15,7 @@ const FILTER_LIST = [
   },
 ];
 
-export default class Filter {
+export default class FilterComponent {
   constructor() {
     this._element = null;
   }

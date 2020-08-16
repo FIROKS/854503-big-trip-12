@@ -1,6 +1,6 @@
-import {createElement} from "../utils/create-element";
+import {createElement} from "../../utils/create-element";
 
-export default class Trip {
+export default class TripComponent {
   constructor(eventsList) {
     this._element = null;
     this._eventsList = eventsList;

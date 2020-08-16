@@ -1,6 +1,6 @@
-import {createElement} from '../utils/create-element';
+import {createElement} from '../../utils/create-element';
 
-export default class Days {
+export default class DayComponent {
   constructor(event, dayNumber) {
     this._element = null;
     this._event = event;

@@ -1,6 +1,6 @@
-import {createElement} from '../utils/create-element';
+import {createElement} from '../../utils/create-element';
 
-const createMenuTemplate = () => {
+const createPresentationTemplate = () => {
   return (
     `<nav class="trip-controls__trip-tabs  trip-tabs">
       <a class="trip-tabs__btn  trip-tabs__btn--active" href="#">Table</a>
@@ -9,13 +9,13 @@ const createMenuTemplate = () => {
   );
 };
 
-export default class Menu {
+export default class PresentationComponent {
   constructor() {
     this._element = null;
   }
 
   getTemplate() {
-    return createMenuTemplate();
+    return createPresentationTemplate();
   }
 
   getElement() {

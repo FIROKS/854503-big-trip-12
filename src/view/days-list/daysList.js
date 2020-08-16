@@ -1,6 +1,6 @@
-import {createElement} from '../utils/create-element';
+import {createElement} from '../../utils/create-element';
 
-export default class DaysList {
+export default class DaysListComponent {
   constructor() {
     this._element = null;
   }

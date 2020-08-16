@@ -1,4 +1,4 @@
-import {createElement} from "../utils/create-element";
+import {createElement} from "../../utils/create-element";
 
 const TRANSFER_LIST = [
   {
@@ -75,7 +75,7 @@ const OFFERS_LIST = [
 ];
 
 // TODO: реализовать учет offers
-export default class EventEditing {
+export default class EventEditingComponent {
   constructor(event, offers) {
     this._element = null;
     this._event = event;

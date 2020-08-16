@@ -1,6 +1,6 @@
-import {createElement} from "../utils/create-element";
+import {createElement} from "../../utils/create-element";
 
-export default class Event {
+export default class EventComponent {
   constructor(eventInfo, offerListTemplate) {
     this._eventInfo = eventInfo;
     this._offerListTemplate = offerListTemplate;

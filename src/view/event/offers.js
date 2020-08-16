@@ -1,4 +1,4 @@
-import {createElement} from "../utils/create-element";
+import {createElement} from "../../utils/create-element";
 
 const MAX_OFFERS_NUMBER = 3;
 
@@ -10,7 +10,7 @@ const OFFERS_PRICES = new Map([
   [`travelByTrain`, 40],
 ]);
 
-export default class Offers {
+export default class OffersComponent {
   constructor(offers) {
     this._element = null;
     this._offers = offers;
