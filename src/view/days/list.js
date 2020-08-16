@@ -23,8 +23,7 @@ export default class DaysListComponent {
 
   _createDaysListTemplate() {
     return (
-      `<ul class="trip-days">
-      </ul>`
+      `<ul class="trip-days"></ul>`
     );
   }
 }

@@ -1,6 +1,6 @@
 import {createElement} from "../../utils/create-element";
 
-export default class PriceComponent {
+export default class TripPriceComponent {
   constructor(events) {
     this._element = null;
     this._events = events;

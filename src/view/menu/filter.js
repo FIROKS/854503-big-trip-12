@@ -15,7 +15,7 @@ const FILTER_LIST = [
   },
 ];
 
-export default class FilterComponent {
+export default class MenuFilterComponent {
   constructor() {
     this._element = null;
   }

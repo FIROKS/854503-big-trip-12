@@ -58,23 +58,21 @@ const NUMBER_TO_MONTH = {
   11: `DEC`,
 };
 
-const getRandomInteger = (from = 0, to = 1) => {
+const generateRandomInteger = (from = 0, to = 1) => {
   const lower = Math.ceil(Math.min(from, to));
   const upper = Math.floor(Math.max(from, to));
 
   return Math.floor(lower + Math.random() * (upper - lower + 1));
 };
 
-const getRandomFrom = (entity) => entity[getRandomInteger(0, entity.length - 1)];
+const getRandomItem = (items) => items[generateRandomInteger(0, items.length - 1)];
 
 const addRandomTimeDimension = (dimension, maxValue) => {
-  const date = dayjs().add(getRandomInteger(0, maxValue), `${dimension}`);
-
-  return date.toString().length < 2 ? `0${date}` : date;
+  return dayjs().add(generateRandomInteger(0, maxValue), dimension);
 };
 
 const generateRandomDate = () => {
-  const randomPeriod = getRandomInteger(0, 2);
+  const randomPeriod = generateRandomInteger(0, 2);
 
   if (randomPeriod === 0) {
     return addRandomTimeDimension(`hour`, MAX_HOUR);
@@ -86,7 +84,7 @@ const generateRandomDate = () => {
   return addRandomTimeDimension(`day`, MAX_DAY);
 };
 
-const getDuration = (timeStart, timeEnd) => {
+const generateTimeDuration = (timeStart, timeEnd) => {
   const hourStart = timeStart.hour();
   const minuteStart = timeStart.minute();
   const hourEnd = timeEnd.hour();
@@ -115,10 +113,10 @@ const generateRandomText = () => {
   const text = SAMPLE_TEXT.split(`. `);
 
   let string = ``;
-  let amount = getRandomInteger(MINIMAL_AMOUNT, RANDOM_NUMBER);
+  let amount = generateRandomInteger(MINIMAL_AMOUNT, RANDOM_NUMBER);
 
   for (let i = 0; i < amount; i++) {
-    string += `${text[getRandomInteger(0, text.length)]}. `;
+    string += `${text[generateRandomInteger(0, text.length)]}. `;
   }
 
   return string;
@@ -126,7 +124,7 @@ const generateRandomText = () => {
 
 const generateRandomPhotos = () => {
   const photos = [];
-  let amount = getRandomInteger(MINIMAL_AMOUNT, RANDOM_NUMBER);
+  let amount = generateRandomInteger(MINIMAL_AMOUNT, RANDOM_NUMBER);
 
   for (let i = 0; i < amount; i++) {
     photos.push(`<img class="event__photo" src="http://picsum.photos/248/152?r=${Math.random()}" alt="Event photo">`);
@@ -138,7 +136,7 @@ const generateRandomPhotos = () => {
 export const generateTimeInfo = () => {
   const start = generateRandomDate();
   const end = generateRandomDate();
-  const duration = getDuration(start, end);
+  const duration = generateTimeDuration(start, end);
 
   return {
     start: `${start.hour()}:${start.minute()}`,
@@ -146,7 +144,7 @@ export const generateTimeInfo = () => {
       year: formatingDate(start.get(`year`)),
       monthNumber: formatingDate(start.get(`month`)),
       month: NUMBER_TO_MONTH[parseInt(formatingDate(start.get(`month`)), 10)],
-      day: formatingDate(start.get(`day`)),
+      day: formatingDate(start.get(`date`)),
       hour: formatingDate(start.get(`hour`)),
       minute: formatingDate(start.get(`minute`)),
       dayjs: start,
@@ -156,7 +154,7 @@ export const generateTimeInfo = () => {
       year: formatingDate(end.get(`year`)),
       monthNumber: formatingDate(end.get(`month`)),
       month: NUMBER_TO_MONTH[parseInt(formatingDate(start.get(`month`)), 10)],
-      day: formatingDate(end.get(`day`)),
+      day: formatingDate(end.get(`date`)),
       hour: formatingDate(end.get(`hour`)),
       minute: formatingDate(end.get(`minute`)),
       dayjs: end,
@@ -166,7 +164,7 @@ export const generateTimeInfo = () => {
 };
 
 export const generateRandomType = () => {
-  const eventType = getRandomFrom(EVENT_TYPE);
+  const eventType = getRandomItem(EVENT_TYPE);
   let preposition = (EVENT_TYPE_ARRIVAL.has(eventType)) ? `at` : `to`;
 
   return {
@@ -175,7 +173,7 @@ export const generateRandomType = () => {
   };
 };
 
-export const generateRandomDestination = () => getRandomFrom(DESTINATION);
+export const generateRandomDestination = () => getRandomItem(DESTINATION);
 
 export const generateRandomDestinationInfo = () => {
   return {
@@ -186,7 +184,7 @@ export const generateRandomDestinationInfo = () => {
 
 export const generateRandomOffers = () => {
   let options = [];
-  const amount = getRandomInteger(0, RANDOM_NUMBER);
+  const amount = generateRandomInteger(0, RANDOM_NUMBER);
   const of = Array.from(OFFERS);
 
   for (let i = 0; i < amount; i++) {
@@ -196,4 +194,4 @@ export const generateRandomOffers = () => {
   return new Set(options);
 };
 
-export const generateEventInitialPrice = () => getRandomInteger(MIN_EVENT_PRICE, MAX_EVENT_PRICE);
+export const generateEventInitialPrice = () => generateRandomInteger(MIN_EVENT_PRICE, MAX_EVENT_PRICE);

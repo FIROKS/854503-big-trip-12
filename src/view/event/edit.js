@@ -75,7 +75,7 @@ const OFFERS_LIST = [
 ];
 
 // TODO: реализовать учет offers
-export default class EventEditingComponent {
+export default class EventEditComponent {
   constructor(event, offers) {
     this._element = null;
     this._event = event;

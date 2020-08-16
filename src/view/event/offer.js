@@ -10,7 +10,7 @@ const OFFERS_PRICES = new Map([
   [`travelByTrain`, 40],
 ]);
 
-export default class OffersComponent {
+export default class EventOfferComponent {
   constructor(offers) {
     this._element = null;
     this._offers = offers;

@@ -9,7 +9,7 @@ const createPresentationTemplate = () => {
   );
 };
 
-export default class PresentationComponent {
+export default class MenuPresentationComponent {
   constructor() {
     this._element = null;
   }

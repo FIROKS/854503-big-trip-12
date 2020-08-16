@@ -4,7 +4,6 @@ const renderPosition = {
 };
 
 export const renderElement = (container, element, place = renderPosition.AFTERBEGIN) => {
-  // Другой способ вставки, принимающий обычную строку?
   if (place === renderPosition.AFTERBEGIN) {
     container.prepend(element);
   }

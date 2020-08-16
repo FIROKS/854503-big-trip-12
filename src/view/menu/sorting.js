@@ -1,6 +1,6 @@
 import {createElement} from "../../utils/create-element";
 
-export default class SortingComponent {
+export default class MenuSortingComponent {
   constructor() {
     this._element = null;
   }

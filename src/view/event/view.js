@@ -1,6 +1,6 @@
 import {createElement} from "../../utils/create-element";
 
-export default class EventComponent {
+export default class EventViewComponent {
   constructor(eventInfo, offerListTemplate) {
     this._eventInfo = eventInfo;
     this._offerListTemplate = offerListTemplate;
