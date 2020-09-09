@@ -1,8 +1,8 @@
-import {createElement} from '../../utils/create-element';
+import Element from '../element';
 
-export default class DayComponent {
+export default class DayComponent extends Element {
   constructor(event, dayNumber) {
-    this._element = null;
+    super();
     this._event = event;
     this._dayNumber = dayNumber;
   }
@@ -11,28 +11,16 @@ export default class DayComponent {
     return this._createDayTemplate(this._event, this._dayNumber);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
   _createDayTemplate(event, dayNumber) {
     return (
       `<li class="trip-days__item  day">
         <div class="day__info">
           <span class="day__counter">${dayNumber}</span>
-          <time class="day__date" datetime="${event.startDatetime.year}-${event.startDatetime.monthNumber}-${event.startDatetime.day}">${event.startDatetime.month} ${event.startDatetime.day}</time>
+          <time class="day__date" datetime="${event.startDate.year}-${event.startDate.monthNumber}-${event.startDate.day}">${event.startDate.month} ${event.startDate.day}</time>
         </div>
         <ul class="trip-events__list">
         </ul>
       </li>`
     );
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

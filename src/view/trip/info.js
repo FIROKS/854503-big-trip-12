@@ -1,25 +1,14 @@
-import {createElement} from "../../utils/create-element";
+import Element from '../element';
 
-export default class TripInfoComponent {
+export default class TripInfoComponent extends Element {
   constructor(eventsList) {
+    super();
     this._element = null;
     this._eventsList = eventsList;
   }
 
   getTemplate() {
     return this._createTripTemplate(this._eventsList);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 
   _getPrice(events) {

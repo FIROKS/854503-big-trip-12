@@ -1,4 +1,4 @@
-import {createElement} from "../../utils/create-element";
+import Element from '../element';
 
 const MAX_OFFERS_NUMBER = 3;
 
@@ -10,8 +10,9 @@ const OFFERS_PRICES = new Map([
   [`travelByTrain`, 40],
 ]);
 
-export default class EventOfferComponent {
+export default class EventOfferComponent extends Element {
   constructor(offers) {
+    super();
     this._element = null;
     this._offers = offers;
   }
@@ -19,19 +20,6 @@ export default class EventOfferComponent {
   getTemplate() {
     return this._createOfferListTemplate(this._offers);
   }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
-  }
-
 
   _createOfferListTemplate(offers) {
     return Array.from(offers)

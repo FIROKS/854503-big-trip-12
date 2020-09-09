@@ -1,4 +1,4 @@
-import {createElement} from "../../utils/create-element";
+import Element from '../element';
 
 const TRANSFER_LIST = [
   {
@@ -75,27 +75,27 @@ const OFFERS_LIST = [
 ];
 
 // TODO: реализовать учет offers
-export default class EventEditComponent {
+export default class EventEditComponent extends Element {
   constructor(event, offers) {
-    this._element = null;
+    super();
     this._event = event;
     this._offers = offers;
+
+    this._editClickHandlet = this._editClickHandlet.bind(this);
   }
 
   getTemplate() {
     return this._createEventEditingTemplate(this._event);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
+  setEditClickHandlet(callback) {
+    this._callback.editClick = callback;
+    this.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, this._editClickHandlet);
   }
 
-  removeElement() {
-    this._element = null;
+  _editClickHandlet(evt) {
+    evt.preventDefault();
+    this._callback.editClick();
   }
 
   _createEventEditingTemplate(eventInfo) {
@@ -147,12 +147,12 @@ export default class EventEditComponent {
             <label class="visually-hidden" for="event-start-time-1">
               From
             </label>
-            <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="${eventInfo.timeInfo.startDatetime.day}/${eventInfo.timeInfo.startDatetime.month}/${eventInfo.timeInfo.startDatetime.year.toString().substring(0, 2)} ${eventInfo.timeInfo.startDatetime.hour}:${eventInfo.timeInfo.startDatetime.minute}">
+            <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="${eventInfo.timeInfo.startDate.day}/${eventInfo.timeInfo.startDate.month}/${eventInfo.timeInfo.startDate.year.toString().substring(0, 2)} ${eventInfo.timeInfo.startDate.hour}:${eventInfo.timeInfo.startDate.minute}">
             —
             <label class="visually-hidden" for="event-end-time-1">
               To
             </label>
-            <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="${eventInfo.timeInfo.endDatetime.day}/${eventInfo.timeInfo.endDatetime.month}/${eventInfo.timeInfo.endDatetime.year.toString().substring(0, 2)} ${eventInfo.timeInfo.endDatetime.hour}:${eventInfo.timeInfo.endDatetime.minute}">
+            <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="${eventInfo.timeInfo.endDate.day}/${eventInfo.timeInfo.endDate.month}/${eventInfo.timeInfo.endDate.year.toString().substring(0, 2)} ${eventInfo.timeInfo.endDate.hour}:${eventInfo.timeInfo.endDate.minute}">
           </div>
 
           <div class="event__field-group  event__field-group--price">

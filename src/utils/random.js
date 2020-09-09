@@ -16,25 +16,6 @@ const DESTINATION = [
   `Geneva`,
 ];
 
-const EVENT_TYPE = [
-  `check-in`,
-  `sightseeing`,
-  `restaurant`,
-  `taxi`,
-  `bus`,
-  `train`,
-  `ship`,
-  `transport`,
-  `drive`,
-  `flight`,
-];
-
-const EVENT_TYPE_ARRIVAL = new Set([
-  `check-in`,
-  `sightseeing`,
-  `restaurant`,
-]);
-
 const OFFERS = new Map([
   [`addLuggage`, 30],
   [`comfortClass`, 100],
@@ -43,21 +24,6 @@ const OFFERS = new Map([
   [`travelByTrain`, 40],
 ]);
 
-const NUMBER_TO_MONTH = {
-  0: `JAN`,
-  1: `FEB`,
-  2: `MAR`,
-  3: `APR`,
-  4: `MAY`,
-  5: `JUN`,
-  6: `JUL`,
-  7: `AUG`,
-  8: `SEP`,
-  9: `OCT`,
-  10: `NOV`,
-  11: `DEC`,
-};
-
 const generateRandomInteger = (from = 0, to = 1) => {
   const lower = Math.ceil(Math.min(from, to));
   const upper = Math.floor(Math.max(from, to));
@@ -65,26 +31,27 @@ const generateRandomInteger = (from = 0, to = 1) => {
   return Math.floor(lower + Math.random() * (upper - lower + 1));
 };
 
-const getRandomItem = (items) => items[generateRandomInteger(0, items.length - 1)];
-
-const addRandomTimeDimension = (dimension, maxValue) => {
-  return dayjs().add(generateRandomInteger(0, maxValue), dimension);
+const addRandomTimeDimension = (date, dimension, maxValue) => {
+  return date.add(generateRandomInteger(0, maxValue), dimension);
 };
 
-const generateRandomDate = () => {
+export const getRandomItem = (items) => items[generateRandomInteger(0, items.length - 1)];
+
+export const generateRandomDate = (initialDate) => {
+  const fromDate = initialDate || dayjs();
   const randomPeriod = generateRandomInteger(0, 2);
 
   if (randomPeriod === 0) {
-    return addRandomTimeDimension(`hour`, MAX_HOUR);
+    return addRandomTimeDimension(fromDate, `hour`, MAX_HOUR);
   }
   if (randomPeriod === 1) {
-    return addRandomTimeDimension(`minute`, MAX_MINUTE);
+    return addRandomTimeDimension(fromDate, `minute`, MAX_MINUTE);
   }
 
-  return addRandomTimeDimension(`day`, MAX_DAY);
+  return addRandomTimeDimension(fromDate, `day`, MAX_DAY);
 };
 
-const generateTimeDuration = (timeStart, timeEnd) => {
+export const generateTimeDuration = (timeStart, timeEnd) => {
   const hourStart = timeStart.hour();
   const minuteStart = timeStart.minute();
   const hourEnd = timeEnd.hour();
@@ -105,11 +72,7 @@ const generateTimeDuration = (timeStart, timeEnd) => {
   return duration;
 };
 
-const formatingDate = (date) => {
-  return date.toString().length < 2 ? `0${date}` : date;
-};
-
-const generateRandomText = () => {
+export const generateRandomText = () => {
   const text = SAMPLE_TEXT.split(`. `);
 
   let string = ``;
@@ -122,7 +85,7 @@ const generateRandomText = () => {
   return string;
 };
 
-const generateRandomPhotos = () => {
+export const generateRandomPhotos = () => {
   const photos = [];
   let amount = generateRandomInteger(MINIMAL_AMOUNT, RANDOM_NUMBER);
 
@@ -133,54 +96,7 @@ const generateRandomPhotos = () => {
   return photos;
 };
 
-export const generateTimeInfo = () => {
-  const start = generateRandomDate();
-  const end = generateRandomDate();
-  const duration = generateTimeDuration(start, end);
-
-  return {
-    start: `${start.hour()}:${start.minute()}`,
-    startDatetime: {
-      year: formatingDate(start.get(`year`)),
-      monthNumber: formatingDate(start.get(`month`)),
-      month: NUMBER_TO_MONTH[parseInt(formatingDate(start.get(`month`)), 10)],
-      day: formatingDate(start.get(`date`)),
-      hour: formatingDate(start.get(`hour`)),
-      minute: formatingDate(start.get(`minute`)),
-      dayjs: start,
-    },
-    end: `${end.hour()}:${end.minute()}`,
-    endDatetime: {
-      year: formatingDate(end.get(`year`)),
-      monthNumber: formatingDate(end.get(`month`)),
-      month: NUMBER_TO_MONTH[parseInt(formatingDate(start.get(`month`)), 10)],
-      day: formatingDate(end.get(`date`)),
-      hour: formatingDate(end.get(`hour`)),
-      minute: formatingDate(end.get(`minute`)),
-      dayjs: end,
-    },
-    duration,
-  };
-};
-
-export const generateRandomType = () => {
-  const eventType = getRandomItem(EVENT_TYPE);
-  let preposition = (EVENT_TYPE_ARRIVAL.has(eventType)) ? `at` : `to`;
-
-  return {
-    eventType,
-    preposition,
-  };
-};
-
 export const generateRandomDestination = () => getRandomItem(DESTINATION);
-
-export const generateRandomDestinationInfo = () => {
-  return {
-    description: generateRandomText(),
-    photos: generateRandomPhotos(),
-  };
-};
 
 export const generateRandomOffers = () => {
   let options = [];

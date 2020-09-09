@@ -1,4 +1,4 @@
-import {createElement} from "../../utils/create-element";
+import Element from '../element';
 
 const FILTER_LIST = [
   {
@@ -15,25 +15,14 @@ const FILTER_LIST = [
   },
 ];
 
-export default class MenuFilterComponent {
+export default class MenuFilterComponent extends Element {
   constructor() {
+    super();
     this._element = null;
   }
 
   getTemplate() {
     return this._cteateFilterTemplate();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 
   _createFilterTypeTemplate(filterInfo) {

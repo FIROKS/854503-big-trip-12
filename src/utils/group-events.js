@@ -6,10 +6,10 @@ dayjs.extend(dayOfYearPlugin);
 export const groupEventsByDays = (events) => {
   const dayGroups = new Map();
 
-  events.sort((a, b) => a.timeInfo.startDatetime.dayjs.dayOfYear() - b.timeInfo.startDatetime.dayjs.dayOfYear());
+  events.sort((firstEvent, secondEvent) => firstEvent.timeInfo.startDate.dayjs.dayOfYear() - secondEvent.timeInfo.startDate.dayjs.dayOfYear());
 
   for (let event of events) {
-    const dayOfYear = event.timeInfo.startDatetime.dayjs.dayOfYear();
+    const dayOfYear = event.timeInfo.startDate.dayjs.dayOfYear();
     const dayGroup = dayGroups.get(dayOfYear);
 
     dayGroups.set(dayOfYear, dayGroup ? [...dayGroup, event] : [event]);

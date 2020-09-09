@@ -1,24 +1,13 @@
-import {createElement} from "../../utils/create-element";
+import Element from '../element';
 
-export default class MenuSortingComponent {
+export default class MenuSortingComponent extends Element {
   constructor() {
+    super();
     this._element = null;
   }
 
   getTemplate() {
     return this._createSortingTemplate();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 
   _createSortingTemplate() {

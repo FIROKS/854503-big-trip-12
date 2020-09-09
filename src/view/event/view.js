@@ -1,26 +1,26 @@
-import {createElement} from "../../utils/create-element";
+import Element from '../element';
 
-export default class EventViewComponent {
+export default class EventViewComponent extends Element {
   constructor(eventInfo, offerListTemplate) {
+    super();
     this._eventInfo = eventInfo;
     this._offerListTemplate = offerListTemplate;
-    this._element = null;
+
+    this._viewClickHandler = this._viewClickHandler.bind(this);
   }
 
   getTemplate() {
     return this._createEventTemplate(this._eventInfo, this._offerListTemplate);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
+  setViewClickHandler(callBack) {
+    this._callback.viewClick = callBack;
+    this.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, this._viewClickHandler);
   }
 
-  removeElement() {
-    this._element = null;
+  _viewClickHandler(evt) {
+    evt.preventDefault();
+    this._callback.viewClick();
   }
 
   _createEventTemplate(eventInfo, offerListTemplate) {
@@ -33,9 +33,9 @@ export default class EventViewComponent {
 
         <div class="event__schedule">
           <p class="event__time">
-            <time class="event__start-time" datetime="${eventInfo.timeInfo.startDatetime.year}-${eventInfo.timeInfo.startDatetime.month}-${eventInfo.timeInfo.startDatetime.day}T${eventInfo.timeInfo.startDatetime.hour}:${eventInfo.timeInfo.startDatetime.minute}">${eventInfo.timeInfo.start}</time>
+            <time class="event__start-time" datetime="${eventInfo.timeInfo.startDate.year}-${eventInfo.timeInfo.startDate.month}-${eventInfo.timeInfo.startDate.day}T${eventInfo.timeInfo.startDate.hour}:${eventInfo.timeInfo.startDate.minute}">${eventInfo.timeInfo.startDate.hour}:${eventInfo.timeInfo.startDate.minute}</time>
             —
-            <time class="event__end-time" datetime="${eventInfo.timeInfo.endDatetime.year}-${eventInfo.timeInfo.endDatetime.month}-${eventInfo.timeInfo.endDatetime.day}T${eventInfo.timeInfo.endDatetime.hour}:${eventInfo.timeInfo.endDatetime.minute}">${eventInfo.timeInfo.end}</time>
+            <time class="event__end-time" datetime="${eventInfo.timeInfo.endDate.year}-${eventInfo.timeInfo.endDate.month}-${eventInfo.timeInfo.endDate.day}T${eventInfo.timeInfo.endDate.hour}:${eventInfo.timeInfo.endDate.minute}">${eventInfo.timeInfo.endDate.hour}:${eventInfo.timeInfo.endDate.minute}</time>
           </p>
           <p class="event__duration">${eventInfo.timeInfo.duration}</p>
         </div>
