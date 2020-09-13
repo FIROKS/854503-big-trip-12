@@ -49,12 +49,14 @@ const generateRandomDestinationInfo = () => {
 
 const generateEvent = () => {
   return {
+    id: random.generateId(),
     typeInfo: generateRandomType(),
     destination: random.generateRandomDestination(),
     offers: random.generateRandomOffers(),
     destinationInfo: generateRandomDestinationInfo(),
     timeInfo: getFormatedDate(generateTimeInfo()),
     price: random.generateEventInitialPrice(),
+    isFavorite: false,
   };
 };
 

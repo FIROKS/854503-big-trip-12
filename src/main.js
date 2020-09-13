@@ -6,7 +6,7 @@ import TripInfoComponent from './view/trip/info';
 import {renderElement} from './utils/renderElement';
 import {generateEvents} from './utils/mock';
 
-import Trip from './presenter/trip';
+import TripPresenter from './presenter/tripPresenter';
 
 
 const events = generateEvents();
@@ -20,6 +20,6 @@ renderElement(infoContainerELement, new TripInfoComponent(events));
 renderElement(controlsContainerElement, new MenuPresentationComponent());
 renderElement(controlsContainerElement, new MenuFilterComponent(), `beforeend`);
 
-const tripPresenter = new Trip(eventsContainerElement, events);
+const tripPresenter = new TripPresenter(eventsContainerElement);
 
-tripPresenter.init();
+tripPresenter.init(events);

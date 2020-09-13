@@ -46,56 +46,73 @@ const ACTIVITY_LIST = [
   },
 ];
 
-const OFFERS_LIST = [
-  {
-    id: `luggage`,
-    title: `Add luggage`,
-    price: `30`
-  },
-  {
-    id: `comfort`,
-    title: `Switch to comfort class`,
-    price: `100`
-  },
-  {
-    id: `meal`,
-    title: `Add meal`,
-    price: `15`
-  },
-  {
-    id: `meal`,
-    title: `Add meal`,
-    price: `15`
-  },
-  {
-    id: `train`,
-    title: `Travel by train`,
-    price: `40`
-  },
-];
+const OFFERS_LIST = {
+  addLuggage: {price: 30, title: `Add luggage`},
+  comfortClass: {price: 100, title: `Switch to comfort`},
+  addMeal: {price: 15, title: `Add meal`},
+  chooseSeats: {price: 5, title: `Сhoose Seats`},
+  travelByTrain: {price: 40, title: `Travel by train`},
+};
 
-// TODO: реализовать учет offers
 export default class EventEditComponent extends AbstractElement {
-  constructor(event, offers) {
+  constructor(event, offerList) {
     super();
     this._event = event;
-    this._offers = offers;
+    this._offerList = offerList;
 
     this._editClickHandler = this._editClickHandler.bind(this);
+    this._favoriteClickHandler = this._favoriteClickHandler.bind(this);
+    this._submitHandler = this._submitHandler.bind(this);
   }
 
   getTemplate() {
     return this._createEventEditingTemplate(this._event);
   }
 
-  setEditClickHandlet(callback) {
+  setEditClickHandler(callback) {
     this._callback.editClick = callback;
     this.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, this._editClickHandler);
+  }
+
+  setFavoriteClickHandler(callback) {
+    this._callback.favoriteClick = callback;
+    this.getElement().querySelector(`.event__favorite-btn`).addEventListener(`click`, this._favoriteClickHandler);
+  }
+
+  setSubmitHandler(callback) {
+    this._callback.submit = callback;
+    this.getElement().querySelector(`.event__save-btn`).addEventListener(`click`, this._submitHandler);
+  }
+
+  setEscKeydown(callback) {
+    this._callback.escKeydown = callback;
+    document.addEventListener(`click`, this._escKeydownHandler);
+  }
+
+  _submitHandler(evt) {
+    evt.preventDefault();
+    this._callback.submit();
+
+    document.removeEventListener(`click`, this._escKeydownHandler);
+  }
+
+  _escKeydownHandler(evt) {
+    if (evt.key === `Escape` || evt.key === `Esc`) {
+      evt.preventDefault();
+      this._callback.escKeydown();
+
+      document.removeEventListener(`click`, this._escKeydownHandler);
+    }
   }
 
   _editClickHandler(evt) {
     evt.preventDefault();
     this._callback.editClick();
+  }
+
+  _favoriteClickHandler(evt) {
+    evt.preventDefault();
+    this._callback.favoriteClick();
   }
 
   _createEventEditingTemplate(eventInfo) {
@@ -166,8 +183,8 @@ export default class EventEditComponent extends AbstractElement {
           <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
           <button class="event__reset-btn" type="reset">Cancel</button>
 
-          <input id="event-favorite-1" class="event__favorite-checkbox  visually-hidden" type="checkbox" name="event-favorite" checked="">
-          <label class="event__favorite-btn" for="event-favorite-1">
+          <input id="event-favorite-${eventInfo.id}" class="event__favorite-checkbox  visually-hidden" type="checkbox" name="event-favorite" checked="">
+          <label class="event__favorite-btn" for="event-favorite-${eventInfo.id}">
             <span class="visually-hidden">Add to favorite</span>
             <svg class="event__favorite-icon" width="28" height="28" viewBox="0 0 28 28">
               <path d="M14 21l-8.22899 4.3262 1.57159-9.1631L.685209 9.67376 9.8855 8.33688 14 0l4.1145 8.33688 9.2003 1.33688-6.6574 6.48934 1.5716 9.1631L14 21z"></path>
@@ -184,10 +201,10 @@ export default class EventEditComponent extends AbstractElement {
 
             <div class="event__available-offers">
 
-            ${OFFERS_LIST
+            ${this._offerList
               .map((offer) => this._createOfferTemplate(offer))
-              .join(``)}
-
+              .join(``)
+      }
             </div>
           </section>
 
@@ -206,14 +223,14 @@ export default class EventEditComponent extends AbstractElement {
     );
   }
 
-  _createOfferTemplate(offerInfo) {
+  _createOfferTemplate(offer) {
     return (
       `<div class="event__offer-selector">
-        <input class="event__offer-checkbox  visually-hidden" id="event-offer-${offerInfo.id}-1" type="checkbox" name="event-offer-${offerInfo.id}">
-        <label class="event__offer-label" for="event-offer-${offerInfo.id}-1">
-          <span class="event__offer-title">${offerInfo.title}</span>
+        <input class="event__offer-checkbox  visually-hidden" id="${OFFERS_LIST[offer].price}-${this._event.id}" type="checkbox" name="${OFFERS_LIST[offer].price}-${this._event.id}">
+        <label class="event__offer-label" for="${OFFERS_LIST[offer].price}-${this._event.id}">
+          <span class="event__offer-title">${OFFERS_LIST[offer].title}</span>
           +
-          €&nbsp;<span class="event__offer-price">${offerInfo.price}</span>
+          €&nbsp;<span class="event__offer-price">${OFFERS_LIST[offer].price}</span>
         </label>
       </div>`
     );
@@ -222,8 +239,8 @@ export default class EventEditComponent extends AbstractElement {
   _createEventTypeTemplate(typeInfo) {
     return (
       `<div class="event__type-item">
-        <input id="event-type-${typeInfo.value}-1" class="event__type-input visually-hidden" type="radio" name="event-type" value="${typeInfo.value}">
-        <label class="event__type-label  event__type-label--${typeInfo.value}" for="event-type-${typeInfo.value}-1">${typeInfo.title}</label>
+        <input id="event-type-${typeInfo.value}-${typeInfo.id}" class="event__type-input visually-hidden" type="radio" name="event-type" value="${typeInfo.value}">
+        <label class="event__type-label  event__type-label--${typeInfo.value}" for="event-type-${typeInfo.value}-${typeInfo.id}">${typeInfo.title}</label>
       </div>`
     );
   }

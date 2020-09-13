@@ -21,6 +21,10 @@ export default class EventOfferComponent extends AbstractElement {
     return this._createOfferListTemplate(this._offers);
   }
 
+  getOffers() {
+    return Array.from(this._offers);
+  }
+
   _createOfferListTemplate(offers) {
     return Array.from(offers)
       .slice(0, MAX_OFFERS_NUMBER)

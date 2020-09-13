@@ -1,16 +1,25 @@
 import AbstractElement from '../abstract-element';
 
+const OFFERS_LIST = {
+  addLuggage: {price: 30, title: `Add luggage`},
+  comfortClass: {price: 100, title: `Switch to comfort`},
+  addMeal: {price: 15, title: `Add meal`},
+  chooseSeats: {price: 5, title: `Сhoose Seats`},
+  travelByTrain: {price: 40, title: `Travel by train`},
+};
+
+
 export default class EventViewComponent extends AbstractElement {
-  constructor(eventInfo, offerListTemplate) {
+  constructor(eventInfo, offerList) {
     super();
     this._eventInfo = eventInfo;
-    this._offerListTemplate = offerListTemplate;
+    this._offerList = offerList;
 
     this._viewClickHandler = this._viewClickHandler.bind(this);
   }
 
   getTemplate() {
-    return this._createEventTemplate(this._eventInfo, this._offerListTemplate);
+    return this._createEventTemplate(this._eventInfo, this._offerList);
   }
 
   setViewClickHandler(callBack) {
@@ -23,7 +32,17 @@ export default class EventViewComponent extends AbstractElement {
     this._callback.viewClick();
   }
 
-  _createEventTemplate(eventInfo, offerListTemplate) {
+  _createOfferTemplate(offer) {
+    return (
+      `<li class="event__offer">
+        <span class="event__offer-title">${OFFERS_LIST[offer].title}</span>
+        +
+        €&nbsp;<span class="event__offer-price">${OFFERS_LIST[offer].price}</span>
+      </li>`
+    );
+  }
+
+  _createEventTemplate(eventInfo) {
     return (
       `<div class="event">
         <div class="event__type">
@@ -46,7 +65,10 @@ export default class EventViewComponent extends AbstractElement {
 
         <h4 class="visually-hidden">Offers:</h4>
         <ul class="event__selected-offers">
-          ${offerListTemplate}
+      ${this._offerList
+        .map((offer) => this._createOfferTemplate(offer))
+        .join(``)
+      }
         </ul>
 
         <button class="event__rollup-btn" type="button">

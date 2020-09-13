@@ -111,3 +111,5 @@ export const generateRandomOffers = () => {
 };
 
 export const generateEventInitialPrice = () => generateRandomInteger(MIN_EVENT_PRICE, MAX_EVENT_PRICE);
+
+export const generateId = () => Date.now() + parseInt(Math.random() * 10000, 10);
