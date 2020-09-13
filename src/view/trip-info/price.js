@@ -1,6 +1,6 @@
-import Element from '../element';
+import AbstractElement from '../abstract-element';
 
-export default class TripPriceComponent extends Element {
+export default class TripPriceComponent extends AbstractElement {
   constructor(events) {
     super();
     this._element = null;

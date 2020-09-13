@@ -1,6 +1,6 @@
-import Element from '../element';
+import AbstractElement from '../abstract-element';
 
-export default class EventViewComponent extends Element {
+export default class EventViewComponent extends AbstractElement {
   constructor(eventInfo, offerListTemplate) {
     super();
     this._eventInfo = eventInfo;

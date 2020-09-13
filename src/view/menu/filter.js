@@ -1,4 +1,4 @@
-import Element from '../element';
+import AbstractElement from '../abstract-element';
 
 const FILTER_LIST = [
   {
@@ -15,7 +15,7 @@ const FILTER_LIST = [
   },
 ];
 
-export default class MenuFilterComponent extends Element {
+export default class MenuFilterComponent extends AbstractElement {
   constructor() {
     super();
     this._element = null;

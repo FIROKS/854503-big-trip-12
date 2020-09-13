@@ -1,6 +1,6 @@
-import Element from '../element';
+import AbstractElement from '../abstract-element';
 
-export default class MenuPresentationComponent extends Element {
+export default class MenuPresentationComponent extends AbstractElement {
   constructor() {
     super();
     this._element = null;

@@ -1,11 +1,11 @@
-import Element from '../view/element';
+import AbstractElement from '../view/abstract-element';
 
 export const replaceElement = (newChild, oldChild) => {
-  if (newChild instanceof Element) {
+  if (newChild instanceof AbstractElement) {
     newChild = newChild.getElement();
   }
 
-  if (oldChild instanceof Element) {
+  if (oldChild instanceof AbstractElement) {
     oldChild = oldChild.getElement();
   }
 

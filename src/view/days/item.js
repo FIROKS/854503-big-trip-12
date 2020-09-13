@@ -1,6 +1,6 @@
-import Element from '../element';
+import AbstractElement from '../abstract-element';
 
-export default class DayComponent extends Element {
+export default class DayComponent extends AbstractElement {
   constructor(event, dayNumber) {
     super();
     this._event = event;

@@ -1,4 +1,4 @@
-import Element from '../view/element';
+import AbstractElement from '../view/abstract-element';
 
 const renderPosition = {
   AFTERBEGIN: `afterbegin`,
@@ -6,11 +6,11 @@ const renderPosition = {
 };
 
 export const renderElement = (container, element, place = renderPosition.AFTERBEGIN) => {
-  if (container instanceof Element) {
+  if (container instanceof AbstractElement) {
     container = container.getElement();
   }
 
-  if (element instanceof Element) {
+  if (element instanceof AbstractElement) {
     element = element.getElement();
   }
 

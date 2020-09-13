@@ -1,4 +1,4 @@
-import Element from '../element';
+import AbstractElement from '../abstract-element';
 
 const MAX_OFFERS_NUMBER = 3;
 
@@ -10,7 +10,7 @@ const OFFERS_PRICES = new Map([
   [`travelByTrain`, 40],
 ]);
 
-export default class EventOfferComponent extends Element {
+export default class EventOfferComponent extends AbstractElement {
   constructor(offers) {
     super();
     this._element = null;

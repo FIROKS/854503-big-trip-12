@@ -1,4 +1,4 @@
-import Element from '../element';
+import AbstractElement from '../abstract-element';
 
 const TRANSFER_LIST = [
   {
@@ -75,13 +75,13 @@ const OFFERS_LIST = [
 ];
 
 // TODO: реализовать учет offers
-export default class EventEditComponent extends Element {
+export default class EventEditComponent extends AbstractElement {
   constructor(event, offers) {
     super();
     this._event = event;
     this._offers = offers;
 
-    this._editClickHandlet = this._editClickHandlet.bind(this);
+    this._editClickHandler = this._editClickHandler.bind(this);
   }
 
   getTemplate() {
@@ -90,10 +90,10 @@ export default class EventEditComponent extends Element {
 
   setEditClickHandlet(callback) {
     this._callback.editClick = callback;
-    this.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, this._editClickHandlet);
+    this.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, this._editClickHandler);
   }
 
-  _editClickHandlet(evt) {
+  _editClickHandler(evt) {
     evt.preventDefault();
     this._callback.editClick();
   }
