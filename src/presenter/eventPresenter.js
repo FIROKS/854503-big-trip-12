@@ -44,6 +44,8 @@ export default class eventPresenter {
       return;
     }
 
+    this._setHandlers();
+
     if (this._mode === Mode.DEFAULT) {
       replaceElement(this._eventViewComponent, prevViewComponent);
     }
@@ -66,13 +68,11 @@ export default class eventPresenter {
   }
 
   _setHandlers() {
-    this._eventViewComponent.setViewClickHandler(() => {
+    this._eventViewComponent.setEditClickHandler(() => {
       this._replaceEventToEditing();
-
-      document.addEventListener(`keydown`, this._escKeyDownHandler);
     });
 
-    this._eventEditComponent.setEditClickHandler(() => {
+    this._eventEditComponent.setViewClickHandler(() => {
       this._replaceEditingToEvent();
     });
 
@@ -100,6 +100,7 @@ export default class eventPresenter {
   _escKeyDownHandler(evt) {
     if (evt.key === `Escape` || evt.key === `Esc`) {
       evt.preventDefault();
+      this._eventEditComponent.reset(this._eventData);
       this._replaceEditingToEvent();
     }
   }
@@ -107,11 +108,14 @@ export default class eventPresenter {
   _replaceEventToEditing() {
     replaceElement(this._eventEditComponent, this._eventViewComponent);
     this._mode = Mode.EDITING;
+
+    document.addEventListener(`keydown`, this._escKeyDownHandler);
   }
 
   _replaceEditingToEvent() {
     replaceElement(this._eventViewComponent, this._eventEditComponent);
     this._mode = Mode.DEFAULT;
+
     document.removeEventListener(`keydown`, this._escKeyDownHandler);
   }
 

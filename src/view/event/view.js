@@ -15,21 +15,21 @@ export default class EventViewComponent extends AbstractElement {
     this._eventInfo = eventInfo;
     this._offerList = offerList;
 
-    this._viewClickHandler = this._viewClickHandler.bind(this);
+    this._editClickHandler = this._editClickHandler.bind(this);
   }
 
   getTemplate() {
     return this._createEventTemplate(this._eventInfo, this._offerList);
   }
 
-  setViewClickHandler(callBack) {
-    this._callback.viewClick = callBack;
-    this.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, this._viewClickHandler);
+  setEditClickHandler(callBack) {
+    this._callback.editClick = callBack;
+    this.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, this._editClickHandler);
   }
 
-  _viewClickHandler(evt) {
+  _editClickHandler(evt) {
     evt.preventDefault();
-    this._callback.viewClick();
+    this._callback.editClick();
   }
 
   _createOfferTemplate(offer) {
