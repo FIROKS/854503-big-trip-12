@@ -13,9 +13,10 @@ const Mode = {
 };
 
 export default class eventPresenter {
-  constructor(container, changeData) {
+  constructor(container, changeData, changeMode) {
     this._container = container;
     this._changeData = changeData;
+    this._changeMode = changeMode;
     this._mode = Mode.DEFAULT;
 
     this._eventViewComponent = null;
@@ -23,6 +24,7 @@ export default class eventPresenter {
 
     this._escKeyDownHandler = this._escKeyDownHandler.bind(this);
     this._favoriteClickHandler = this._favoriteClickHandler.bind(this);
+    this._mode = Mode.DEFAULT;
   }
 
   init(eventData) {
@@ -61,6 +63,12 @@ export default class eventPresenter {
   destroy() {
     remove(this._eventViewComponent);
     remove(this._eventEditComponent);
+  }
+
+  resetView() {
+    if (this._mode !== Mode.DEFAULT) {
+      this._replaceEditingToEvent();
+    }
   }
 
   _renderEvent() {
@@ -107,8 +115,8 @@ export default class eventPresenter {
 
   _replaceEventToEditing() {
     replaceElement(this._eventEditComponent, this._eventViewComponent);
+    this._changeMode();
     this._mode = Mode.EDITING;
-
     document.addEventListener(`keydown`, this._escKeyDownHandler);
   }
 

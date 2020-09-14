@@ -15,6 +15,7 @@ export default class TripPresenter {
     this._daysList = new DaysListComponent();
     this._menuSorting = new MenuSortingComponent();
     this._updateEventHandler = this._updateEventHandler.bind(this);
+    this._changeModeHandler = this._changeModeHandler.bind(this);
     this._eventPresenter = {};
   }
 
@@ -28,6 +29,12 @@ export default class TripPresenter {
     const daysListElement = document.querySelector(`.trip-days`);
 
     this._renderEvents(daysListElement);
+  }
+
+  _changeModeHandler() {
+    Object
+      .values(this._eventPresenter)
+      .forEach((presenter) => presenter.resetView());
   }
 
   _renderDaysList() {
@@ -61,7 +68,7 @@ export default class TripPresenter {
       renderElement(daysListElement, dayElement, `beforeend`);
 
       for (let eventDay of eventDayGroup) {
-        const event = new EventPresenter(container, this._updateEventHandler);
+        const event = new EventPresenter(container, this._updateEventHandler, this._changeModeHandler);
         event.init(eventDay);
         this._eventPresenter[eventDay.id] = event;
       }
