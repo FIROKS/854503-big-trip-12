@@ -1,5 +1,8 @@
 import SmartView from '../smart';
 import {generateRandomText, generateRandomPhotos} from '../../utils/random';
+import flatpickr from 'flatpickr';
+
+import '../../../node_modules/flatpickr/dist/flatpickr.min.css';
 
 const TRANSFER_LIST = [
   {
@@ -66,6 +69,7 @@ export default class EventEditComponent extends SmartView {
     super();
     this._event = event;
     this._offerList = offerList;
+    this._datePicker = null;
 
     this._data = EventEditComponent.parseEventToData(event);
 
@@ -76,6 +80,7 @@ export default class EventEditComponent extends SmartView {
     this._changeEventDestination = this._changeEventDestination.bind(this);
     this._changeEventPrice = this._changeEventPrice.bind(this);
     this._resetClickHandler = this._resetClickHandler.bind(this);
+    this._dueDateChangeHandler = this._dueDateChangeHandler.bind(this);
 
     this._setInnerHandlers();
   }
@@ -131,6 +136,46 @@ export default class EventEditComponent extends SmartView {
     );
   }
 
+  _setDatePicker() {
+    if (this._datePicker) {
+      this._datePicker.destroy();
+      this._datePicker = null;
+    }
+
+    this._datePicker = flatpickr(
+        this.getElement().querySelector(`#event-start-time-1`),
+        {
+          dateFormat: `d/M/y H:i`,
+          onChange: this._dueDateChangeHandler
+        }
+    );
+    this._datePicker = flatpickr(
+        this.getElement().querySelector(`#event-end-time-1`),
+        {
+          dateFormat: `d/M/y H:i`,
+          onChange: this._dueDateChangeHandler
+        }
+    );
+  }
+// TODO:
+  _dueDateChangeHandler(selectedDates, dateStr, instance) {
+    const dateType = instance.element.getAttribute(`name`);
+
+    if (dateType === `event-start-time`) {
+      this.updateData({
+        startDate: {
+          dayjs: selectedDates[0]
+        }
+      });
+    } else {
+      this.updateData({
+        endDate: {
+          dayjs: selectedDates[0]
+        }
+      });
+    }
+  }
+
   _resetClickHandler(evt) {
     evt.preventDefault();
 
@@ -141,6 +186,7 @@ export default class EventEditComponent extends SmartView {
     this.getElement().querySelector(`.event__type-list`).addEventListener(`click`, this._changeEventTypeHandler);
     this.getElement().querySelector(`.event__input--destination`).addEventListener(`change`, this._changeEventDestination);
     this.getElement().querySelector(`.event__input--price`).addEventListener(`change`, this._changeEventPrice);
+    this._setDatePicker();
   }
 
   _changeEventTypeHandler(evt) {
